@@ -1,0 +1,110 @@
+datasource db {
+    // could be postgresql or mysql
+    provider = "postgresql"
+    url      = "postgresql://postgres:73481200@localhost/doctorapp-db"
+}
+
+generator db {
+    provider = "go run github.com/prisma/prisma-client-go"
+    // set the output folder and package name
+    output   = "./prisma/client"
+    package  = "github.com/asloth/doctor-app-graphql"
+}
+
+model UserType {
+    id        Int      @id @default(autoincrement())
+    name      String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    users     User[]
+}
+
+model User {
+    id         Int       @id @default(autoincrement())
+    name       String
+    password   String
+    userTypeId Int
+    userType   UserType  @relation(fields: [userTypeId], references: [id])
+    patients   Patient?
+    doctors    Doctor?
+}
+
+model IdentificationDocument {
+    id       Int       @id @default(autoincrement())
+    name     String
+    patients Patient[]
+}
+
+model ClinicHistory {
+    id          Int      @id @default(autoincrement())
+    name        String
+    documentUrl String
+    patient     Patient?
+}
+
+model Patient {
+    id                       Int                    @id @default(autoincrement())
+    documentId               String
+    name                     String
+    lastname                 String
+    email                    String
+    phoneNumber              String?
+    sisId                    String?
+    genre                    String                 @db.Char(1)
+    birthDate                DateTime               @db.Date
+    address                  String
+    district                 String
+    region                   String
+    identificationDocument   IdentificationDocument @relation(fields: [identificationDocumentId], references: [id])
+    identificationDocumentId Int
+    user                     User?                  @relation(fields: [userId], references: [id])
+    userId                   Int?
+    clinicHistory            ClinicHistory?         @relation(fields: [clinicHistoryId], references: [id])
+    clinicHistoryId          Int?                   @unique
+    documentIdUrl            String?
+    attentions               Attention[]
+}
+
+model Doctor {
+    id            Int              @id @default(autoincrement())
+    name          String
+    documentId    String
+    lastname      String
+    specialty     String
+    collegeNumber String
+    email         String
+    user          User?            @relation(fields: [userId], references: [id])
+    userId        Int?
+    schedule      DoctorSchedule[]
+    attentions    Attention[]
+}
+
+model DoctorSchedule {
+    id       Int      @id @default(autoincrement())
+    initDate DateTime @db.Date
+    endDate  DateTime @db.Date
+    starHour DateTime @db.Time
+    endHour  DateTime @db.Time
+    doctor   Doctor?  @relation(fields: [doctorId], references: [id])
+    doctorId Int?
+}
+
+model MedicalCenter {
+    id         Int         @id @default(autoincrement())
+    name       String
+    address    String
+    openHour   Int
+    closeHour  Int
+    attentions Attention[]
+}
+
+model Attention {
+    id              Int            @id @default(autoincrement())
+    date            DateTime
+    patient         Patient?       @relation(fields: [patientId], references: [id])
+    patientId       Int?
+    doctor          Doctor?        @relation(fields: [doctorId], references: [id])
+    doctorId        Int?
+    medicalCenter   MedicalCenter? @relation(fields: [medicalCenterId], references: [id])
+    medicalCenterId Int?
+}

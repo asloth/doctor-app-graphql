@@ -1,0 +1,90 @@
+
+type UserType {
+  id: ID!
+  name: String!
+  createdAt: Date!
+  updatedAt: Date!
+  users: [User!]!
+}
+
+type User {
+  id: ID!
+  name: String!
+  password: String!
+  userType: UserType!
+  patients: Patient
+  doctors: Doctor
+}
+
+type IdentificationDocument{
+  id: ID!
+  name: String!
+  patients: [Patient!]!
+}
+
+type ClinicHistory{
+  id: ID!
+  name: String!
+  documentUrl: String!
+  patient: Patient!
+}
+
+type Patient {
+  id: ID!
+  documentId: String!
+  name: String!
+  lastname: String!
+  email: String!
+  phoneNumber: String
+  sisId: String
+  genre: String!
+  birthDate: Date!
+  address: String!
+  district: String!
+  region: String!
+  identificationDocument: IdentificationDocument!
+  user: User!
+  clinicHistory: ClinicHistory
+  documentIdUrl: String!
+  attentions: [Attention!]!
+}
+
+type Attention {
+
+}
+
+type Doctor {
+  id: ID!
+  name: String!
+  lastname: String!
+  documentId: String!
+  specialty: String!
+  collegeNumber: String!
+  email: String!
+  user: User
+  schedule: [DoctorSchedule!]!
+  attentions: [Attention!]!
+}
+
+type DoctorSchedule{
+  id: ID!
+  initDate: Date!
+  endDate: Date!
+  starHour: 
+  endHour:
+  doctor:
+}
+
+
+type Query {
+  todos: [Todo!]!
+}
+
+input NewTodo {
+  text: String!
+  userId: String!
+}
+
+type Mutation {
+  createTodo(input: NewTodo!): Todo!
+}
