@@ -39,7 +39,7 @@ model ClinicHistory {
     id          Int      @id @default(autoincrement())
     name        String
     documentUrl String
-    patient     Patient?
+    patient     Patient
 }
 
 model Patient {

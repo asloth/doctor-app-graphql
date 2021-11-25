@@ -49,10 +49,6 @@ type Patient {
   attentions: [Attention!]!
 }
 
-type Attention {
-
-}
-
 type Doctor {
   id: ID!
   name: String!
@@ -70,20 +66,37 @@ type DoctorSchedule{
   id: ID!
   initDate: Date!
   endDate: Date!
-  starHour: 
-  endHour:
-  doctor:
+  starHour: Int!
+  endHour: Int!
+  doctor: Doctor!
 }
 
+type MedicalCenter {
+  id: ID!
+  name: String! 
+  address: String!
+  openHour: Int!
+  closeHour: Int!
+  attentions: [Attention!]!
+}
 
-type Query {
-  todos: [Todo!]!
+type Attention {
+  id: ID!
+  date: Date!
+  patient: Patient!
+  doctor: Doctor!
+  medicalCenter: MedicalCenter!
 }
 
 input NewTodo {
   text: String!
   userId: String!
 }
+
+type Query {
+  todos: [Todo!]!
+}
+
 
 type Mutation {
   createTodo(input: NewTodo!): Todo!
