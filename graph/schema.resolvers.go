@@ -11,11 +11,19 @@ import (
 	"github.com/asloth/doctor-app-graphql/graph/model"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+func (r *mutationResolver) CreateUserType(ctx context.Context, input model.NewUserType) (*model.UserType, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+func (r *mutationResolver) UpdateUserType(ctx context.Context, id string, input model.NewUserType) (*model.UserType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *mutationResolver) DeleteUserType(ctx context.Context, id string) (*model.UserType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) ListUserTypes(ctx context.Context) ([]*model.UserType, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 

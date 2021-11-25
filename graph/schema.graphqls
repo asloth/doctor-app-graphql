@@ -1,9 +1,11 @@
 
+scalar Time
+
 type UserType {
   id: ID!
   name: String!
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: Time!
+  updatedAt: Time!
   users: [User!]!
 }
 
@@ -38,7 +40,7 @@ type Patient {
   phoneNumber: String
   sisId: String
   genre: String!
-  birthDate: Date!
+  birthDate: Time!
   address: String!
   district: String!
   region: String!
@@ -64,8 +66,8 @@ type Doctor {
 
 type DoctorSchedule{
   id: ID!
-  initDate: Date!
-  endDate: Date!
+  initDate: Time!
+  endDate: Time!
   starHour: Int!
   endHour: Int!
   doctor: Doctor!
@@ -82,22 +84,23 @@ type MedicalCenter {
 
 type Attention {
   id: ID!
-  date: Date!
+  date: Time!
   patient: Patient!
   doctor: Doctor!
   medicalCenter: MedicalCenter!
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
+input NewUserType {
+  name: String!
 }
 
 type Query {
-  todos: [Todo!]!
+  listUserTypes: [UserType!]!
 }
 
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createUserType(input: NewUserType!): UserType
+  updateUserType(id:ID!, input:NewUserType! ): UserType
+  deleteUserType(id: ID!): UserType
 }

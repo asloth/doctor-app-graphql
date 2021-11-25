@@ -2,19 +2,99 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+import (
+	"time"
+)
+
+type Attention struct {
+	ID            string         `json:"id"`
+	Date          time.Time      `json:"date"`
+	Patient       *Patient       `json:"patient"`
+	Doctor        *Doctor        `json:"doctor"`
+	MedicalCenter *MedicalCenter `json:"medicalCenter"`
 }
 
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
+type ClinicHistory struct {
+	ID          string   `json:"id"`
+	Name        string   `json:"name"`
+	DocumentURL string   `json:"documentUrl"`
+	Patient     *Patient `json:"patient"`
+}
+
+type Doctor struct {
+	ID            string            `json:"id"`
+	Name          string            `json:"name"`
+	Lastname      string            `json:"lastname"`
+	DocumentID    string            `json:"documentId"`
+	Specialty     string            `json:"specialty"`
+	CollegeNumber string            `json:"collegeNumber"`
+	Email         string            `json:"email"`
+	User          *User             `json:"user"`
+	Schedule      []*DoctorSchedule `json:"schedule"`
+	Attentions    []*Attention      `json:"attentions"`
+}
+
+type DoctorSchedule struct {
+	ID       string    `json:"id"`
+	InitDate time.Time `json:"initDate"`
+	EndDate  time.Time `json:"endDate"`
+	StarHour int       `json:"starHour"`
+	EndHour  int       `json:"endHour"`
+	Doctor   *Doctor   `json:"doctor"`
+}
+
+type IdentificationDocument struct {
+	ID       string     `json:"id"`
+	Name     string     `json:"name"`
+	Patients []*Patient `json:"patients"`
+}
+
+type MedicalCenter struct {
+	ID         string       `json:"id"`
+	Name       string       `json:"name"`
+	Address    string       `json:"address"`
+	OpenHour   int          `json:"openHour"`
+	CloseHour  int          `json:"closeHour"`
+	Attentions []*Attention `json:"attentions"`
+}
+
+type NewUserType struct {
+	Name string `json:"name"`
+}
+
+type Patient struct {
+	ID                     string                  `json:"id"`
+	DocumentID             string                  `json:"documentId"`
+	Name                   string                  `json:"name"`
+	Lastname               string                  `json:"lastname"`
+	Email                  string                  `json:"email"`
+	PhoneNumber            *string                 `json:"phoneNumber"`
+	SisID                  *string                 `json:"sisId"`
+	Genre                  string                  `json:"genre"`
+	BirthDate              time.Time               `json:"birthDate"`
+	Address                string                  `json:"address"`
+	District               string                  `json:"district"`
+	Region                 string                  `json:"region"`
+	IdentificationDocument *IdentificationDocument `json:"identificationDocument"`
+	User                   *User                   `json:"user"`
+	ClinicHistory          *ClinicHistory          `json:"clinicHistory"`
+	DocumentIDURL          string                  `json:"documentIdUrl"`
+	Attentions             []*Attention            `json:"attentions"`
 }
 
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	ID       string    `json:"id"`
+	Name     string    `json:"name"`
+	Password string    `json:"password"`
+	UserType *UserType `json:"userType"`
+	Patients *Patient  `json:"patients"`
+	Doctors  *Doctor   `json:"doctors"`
+}
+
+type UserType struct {
+	ID        string    `json:"id"`
+	Name      string    `json:"name"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	Users     []*User   `json:"users"`
 }
