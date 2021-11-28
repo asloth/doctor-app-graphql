@@ -16,7 +16,7 @@ func (r *mutationResolver) CreateUserType(ctx context.Context, input model.NewUs
 	if err != nil {
 		panic(err)
 	} // returns error
-	return rs, err
+	return rs, nil
 }
 
 func (r *mutationResolver) UpdateUserType(ctx context.Context, id string, input model.NewUserType) (*model.UserType, error) {
@@ -24,7 +24,7 @@ func (r *mutationResolver) UpdateUserType(ctx context.Context, id string, input 
 	if err != nil {
 		panic(err)
 	} // returns error
-	return rs, err
+	return rs, nil
 }
 
 func (r *mutationResolver) DeleteUserType(ctx context.Context, id string) (*model.UserType, error) {
@@ -32,7 +32,7 @@ func (r *mutationResolver) DeleteUserType(ctx context.Context, id string) (*mode
 	if err != nil {
 		panic(err)
 	} // returns error
-	return rs, err
+	return rs, nil
 }
 
 func (r *queryResolver) ListUserTypes(ctx context.Context) ([]*model.UserType, error) {
@@ -40,7 +40,7 @@ func (r *queryResolver) ListUserTypes(ctx context.Context) ([]*model.UserType, e
 	if err != nil {
 		panic(err)
 	} // returns error
-	return rs, err
+	return rs, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
