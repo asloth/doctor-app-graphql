@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/asloth/doctor-app-graphql/database"
 	"github.com/asloth/doctor-app-graphql/graph/generated"
@@ -13,25 +12,35 @@ import (
 )
 
 func (r *mutationResolver) CreateUserType(ctx context.Context, input model.NewUserType) (*model.UserType, error) {
-	//panic(fmt.Errorf("not implemented"))
-
-	ut, err := database.Handler.CreateUserType(&input.Name)
+	rs, err := database.Handler.CreateUserType(&input.Name)
 	if err != nil {
 		panic(err)
 	} // returns error
-	return ut, err
+	return rs, err
 }
 
 func (r *mutationResolver) UpdateUserType(ctx context.Context, id string, input model.NewUserType) (*model.UserType, error) {
-	panic(fmt.Errorf("not implemented"))
+	rs, err := database.Handler.UpdateUserType(&id, &input.Name)
+	if err != nil {
+		panic(err)
+	} // returns error
+	return rs, err
 }
 
 func (r *mutationResolver) DeleteUserType(ctx context.Context, id string) (*model.UserType, error) {
-	panic(fmt.Errorf("not implemented"))
+	rs, err := database.Handler.DeleteUserType(&id)
+	if err != nil {
+		panic(err)
+	} // returns error
+	return rs, err
 }
 
 func (r *queryResolver) ListUserTypes(ctx context.Context) ([]*model.UserType, error) {
-	panic(fmt.Errorf("not implemented"))
+	rs, err := database.Handler.ListUserTypes()
+	if err != nil {
+		panic(err)
+	} // returns error
+	return rs, err
 }
 
 // Mutation returns generated.MutationResolver implementation.

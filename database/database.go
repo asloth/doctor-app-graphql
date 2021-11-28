@@ -1,10 +1,8 @@
 package database
 
 import (
-	"strconv"
 	"time"
 
-	"github.com/asloth/doctor-app-graphql/graph/model"
 	"gorm.io/gorm"
 )
 
@@ -39,21 +37,7 @@ func (h *BaseHandler) Migrate() error {
 	return err
 }
 
-func (h *BaseHandler) CreateUserType(name *string) (*model.UserType, error) {
-
-	userType := UserType{Name: *name}
-
-	result := h.db.Create(&userType) // pass pointer of data to Create
-
-	return &model.UserType{
-		ID:   strconv.FormatUint(uint64(userType.ID), 10),
-		Name: *name,
-	}, result.Error
-
-}
-
 //Schemas que representan las tablas de la base de datos
-
 type UserType struct {
 	ID    uint `gorm:"primaryKey;autoIncrement"`
 	Name  string
