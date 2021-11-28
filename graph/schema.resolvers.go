@@ -7,12 +7,19 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/asloth/doctor-app-graphql/database"
 	"github.com/asloth/doctor-app-graphql/graph/generated"
 	"github.com/asloth/doctor-app-graphql/graph/model"
 )
 
 func (r *mutationResolver) CreateUserType(ctx context.Context, input model.NewUserType) (*model.UserType, error) {
-	panic(fmt.Errorf("not implemented"))
+	//panic(fmt.Errorf("not implemented"))
+
+	ut, err := database.Handler.CreateUserType(&input.Name)
+	if err != nil {
+		panic(err)
+	} // returns error
+	return ut, err
 }
 
 func (r *mutationResolver) UpdateUserType(ctx context.Context, id string, input model.NewUserType) (*model.UserType, error) {

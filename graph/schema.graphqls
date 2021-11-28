@@ -4,9 +4,7 @@ scalar Time
 type UserType {
   id: ID!
   name: String!
-  createdAt: Time!
-  updatedAt: Time!
-  users: [User!]!
+  users: [User]
 }
 
 type User {

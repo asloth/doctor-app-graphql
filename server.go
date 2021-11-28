@@ -17,27 +17,21 @@ import (
 const defaultPort = "8080"
 
 func main() {
-
+	//DATABASE
+	//el string con los datos de conexion para conectarnos a la bd
 	var dsn = "host=localhost user=postgres password=73481200 dbname=doctorapp-db port=5432 sslmode=disable TimeZone=Asia/Shanghai"
-
+	//instaciamos la conexion con la base de datos
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
 		panic("failed to connect database")
 	}
+	//seteamos el handler de la base de datos
+	database.Handler = database.NewBaseHandler(db)
+	//migramos los schemas
+	database.Handler.Migrate()
 
-	// Migrate the schema
-	db.AutoMigrate(&database.UserType{},
-		&database.User{},
-		&database.Patient{},
-		&database.MedicalCenter{},
-		&database.IdentificationDocument{},
-		&database.Doctor{},
-		&database.DoctorSchedule{},
-		&database.ClinicHistory{},
-		&database.Attention{},
-	)
-
+	//SERVER
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort

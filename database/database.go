@@ -1,10 +1,58 @@
 package database
 
 import (
+	"strconv"
 	"time"
+
+	"github.com/asloth/doctor-app-graphql/graph/model"
+	"gorm.io/gorm"
 )
 
-// https://github.com/jackc/pgx
+var Handler *BaseHandler
+
+type BaseHandler struct {
+	db *gorm.DB
+}
+
+func NewBaseHandler(db *gorm.DB) *BaseHandler {
+	return &BaseHandler{
+		db: db,
+	}
+}
+
+//Funcion que migra los schemas
+func (h *BaseHandler) Migrate() error {
+	// Migrate the schema
+	err := h.db.AutoMigrate(&UserType{},
+		&User{},
+		&Patient{},
+		&MedicalCenter{},
+		&IdentificationDocument{},
+		&Doctor{},
+		&DoctorSchedule{},
+		&ClinicHistory{},
+		&Attention{},
+	)
+	if err != nil {
+		panic("migration failed ")
+	}
+	return err
+}
+
+func (h *BaseHandler) CreateUserType(name *string) (*model.UserType, error) {
+
+	userType := UserType{Name: *name}
+
+	result := h.db.Create(&userType) // pass pointer of data to Create
+
+	return &model.UserType{
+		ID:   strconv.FormatUint(uint64(userType.ID), 10),
+		Name: *name,
+	}, result.Error
+
+}
+
+//Schemas que representan las tablas de la base de datos
 
 type UserType struct {
 	ID    uint `gorm:"primaryKey;autoIncrement"`
