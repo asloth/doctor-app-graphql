@@ -17,7 +17,7 @@ type Attention struct {
 type ClinicHistory struct {
 	ID          string   `json:"id"`
 	Name        string   `json:"name"`
-	DocumentURL string   `json:"documentUrl"`
+	DocumentURL *string  `json:"documentUrl"`
 	Patient     *Patient `json:"patient"`
 }
 
@@ -67,7 +67,6 @@ type Patient struct {
 	DocumentID             string                  `json:"documentId"`
 	Name                   string                  `json:"name"`
 	Lastname               string                  `json:"lastname"`
-	Email                  string                  `json:"email"`
 	PhoneNumber            *string                 `json:"phoneNumber"`
 	SisID                  *string                 `json:"sisId"`
 	Genre                  string                  `json:"genre"`
@@ -78,23 +77,20 @@ type Patient struct {
 	IdentificationDocument *IdentificationDocument `json:"identificationDocument"`
 	User                   *User                   `json:"user"`
 	ClinicHistory          *ClinicHistory          `json:"clinicHistory"`
-	DocumentIDURL          string                  `json:"documentIdUrl"`
+	DocumentIDURL          *string                 `json:"documentIdUrl"`
 	Attentions             []*Attention            `json:"attentions"`
 }
 
 type User struct {
 	ID       string    `json:"id"`
 	Name     string    `json:"name"`
+	Email    string    `json:"email"`
 	Password string    `json:"password"`
 	UserType *UserType `json:"userType"`
-	Patients *Patient  `json:"patients"`
-	Doctors  *Doctor   `json:"doctors"`
 }
 
 type UserType struct {
-	ID        string    `json:"id"`
-	Name      string    `json:"name"`
-	CreatedAt time.Time `json:"createdAt"`
-	UpdatedAt time.Time `json:"updatedAt"`
-	Users     []*User   `json:"users"`
+	ID    string  `json:"id"`
+	Name  string  `json:"name"`
+	Users []*User `json:"users"`
 }

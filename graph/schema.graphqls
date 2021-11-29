@@ -10,22 +10,21 @@ type UserType {
 type User {
   id: ID!
   name: String!
+  email: String!
   password: String!
   userType: UserType!
-  patients: Patient
-  doctors: Doctor
 }
 
 type IdentificationDocument{
   id: ID!
   name: String!
-  patients: [Patient!]!
+  patients: [Patient]
 }
 
-type ClinicHistory{
+type ClinicHistory {
   id: ID!
   name: String!
-  documentUrl: String!
+  documentUrl: String
   patient: Patient!
 }
 
@@ -34,7 +33,6 @@ type Patient {
   documentId: String!
   name: String!
   lastname: String!
-  email: String!
   phoneNumber: String
   sisId: String
   genre: String!
@@ -45,8 +43,8 @@ type Patient {
   identificationDocument: IdentificationDocument!
   user: User!
   clinicHistory: ClinicHistory
-  documentIdUrl: String!
-  attentions: [Attention!]!
+  documentIdUrl: String
+  attentions: [Attention]
 }
 
 type Doctor {
@@ -94,6 +92,10 @@ input NewUserType {
 
 type Query {
   listUserTypes: [UserType!]!
+  listUsers: [User!]!
+  listPatiens: [Patient!]!
+  listClinicHistories: [ClinicHistory!]!
+  listIdentificationDocuments: [IdentificationDocument!]!
 }
 
 
@@ -101,4 +103,16 @@ type Mutation {
   createUserType(input: NewUserType!): UserType
   updateUserType(id:ID!, input:NewUserType! ): UserType
   deleteUserType(id: ID!): UserType
+  createUser(name: String!, email: String!, password: String!, usertype: Int!): User
+  updateUser(id: ID!, name: String, email: String, password: String): User
+  deleteUser(id: ID!): String
+  createIdentificationDocument(name: String): IdentificationDocument
+  updateIdentificationDocument(id: ID!, name:String!): IdentificationDocument
+  deleteIdentificationDocument(id: ID!): String
+  createClinicHistory(name: String!, documentUrl: String, patientid: Int!): ClinicHistory
+  updateClinicHistory(id: ID!, documentUrl: String!): ClinicHistory
+  deleteClinicHistory(id: ID!): String!
+  createPatient(documentId: String!, name: String!, lastname:String! , phoneNumber:String, sisId:String, genre:String!, birthDate:Time!, address:String!, district:String!, region:String!, identificationDocumentId: Int!, userid: Int! ): Patient
+  updatePatient(id: ID!, documentId: String, name: String, lastname:String, phoneNumber:String, sisId:String, genre:String!, birthDate:Time, address:String, district:String, region:String, identificationDocumentId: Int, userid: Int, clinicHistoryId: Int,documentIdUrl: String ): Patient
+  deletePatient(id: ID!): String!
 }

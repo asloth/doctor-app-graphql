@@ -47,6 +47,7 @@ type UserType struct {
 type User struct {
 	ID         uint   `gorm:"primaryKey;autoIncrement"`
 	Name       string `gorm:"not null"`
+	Email      string `gorm:"not null"`
 	Password   string `gorm:"not null"`
 	UserTypeID uint
 	UserType   UserType `gorm:"foreignKey:UserTypeID;references:ID"`
@@ -55,12 +56,11 @@ type User struct {
 type Patient struct {
 	ID                       uint `gorm:"primaryKey;autoIncrement"`
 	UserID                   uint
-	User                     User
+	User                     User `gorm:"foreignKey:UserID;references:ID"`
 	ClinicHistory            ClinicHistory
 	DocumentId               string
 	Name                     string
 	Lastname                 string
-	Email                    string
 	PhoneNumber              string
 	SisId                    string
 	Genre                    string
@@ -81,7 +81,6 @@ type Doctor struct {
 	Name       string
 	Lastname   string
 	DocumentId string
-	Email      string
 	Schedule   []DoctorSchedule
 	Attentions []Attention
 }
